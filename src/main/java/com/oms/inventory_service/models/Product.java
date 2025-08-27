@@ -16,7 +16,7 @@ public class Product {
 
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "_order_id_sequence_generator"
+            generator = "_product_id_sequence_generator"
     )
     @SequenceGenerator(
             name = "_product_id_sequence_generator",
