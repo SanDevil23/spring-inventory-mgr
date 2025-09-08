@@ -1,4 +1,5 @@
 package com.oms.inventory_service.service;
 
-public class ProductService {
+public class ProductService implements IProductService{
+
 }
