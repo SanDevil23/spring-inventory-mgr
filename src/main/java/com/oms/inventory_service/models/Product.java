@@ -30,6 +30,7 @@ public class Product {
     private String brandName;
     private String productName;
     private String description;
+    private Long quantity;
     private String costPrice;
     private String category;
     private LocalDateTime createdAt;
