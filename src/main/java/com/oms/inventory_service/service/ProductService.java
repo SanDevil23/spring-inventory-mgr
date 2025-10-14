@@ -42,7 +42,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public ProductDto fetchProductById(Long productId) {
+    public ProductDto getProductById(Long productId) {
         return ProductDto.toDto(productRepository.getReferenceById(productId));
     }
 
