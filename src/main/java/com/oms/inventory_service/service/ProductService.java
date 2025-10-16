@@ -4,6 +4,7 @@ import com.oms.inventory_service.dao.ProductRepository;
 import com.oms.inventory_service.dto.ProductDto;
 import com.oms.inventory_service.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -42,7 +43,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public ProductDto fetchProductById(Long productId) {
+    public ProductDto getProductById(Long productId) {
         return ProductDto.toDto(productRepository.getReferenceById(productId));
     }
 
@@ -65,17 +66,17 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public void updateQuantity(long productId, long qty) {
+    public HttpStatus updateQuantity(long productId, long qty) {
         Product productToUpdate = productRepository.getReferenceById(productId);
         productToUpdate.setQuantity(qty);
 
         // verification mech
         if (productRepository.getReferenceById(productId).getQuantity() != qty) {
             // TODO: need to log quantity not updated
-            return;
+            return HttpStatus.INTERNAL_SERVER_ERROR ;
         }
 
-        return;
+        return HttpStatus.OK;
     }
 
     @Override
