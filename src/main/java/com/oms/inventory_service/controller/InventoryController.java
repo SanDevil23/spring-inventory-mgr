@@ -1,6 +1,7 @@
 package com.oms.inventory_service.controller;
 
 import com.oms.inventory_service.dto.ProductDto;
+import com.oms.inventory_service.models.Product;
 import com.oms.inventory_service.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +32,13 @@ public class InventoryController {
         return ResponseEntity.ok().body("New Product added successfully");
     }
 
-    public void getProductById(@RequestHeader long productId){
-        ProductDto product = productService.getProductById(productId);
+    public ProductDto getProductById(@RequestHeader long productId){
+        return productService.getProductById(productId);
     }
 
-    public void getProductsByCategory(@RequestHeader String category){
-        List<ProductDto> product = productService.getProductsByCategory(category);
+    public List<ProductDto> getProductsByCategory(@RequestHeader String category){
+        List<ProductDto> products = productService.getProductsByCategory(category);
+        return products;
     }
 
     public void getProductsByName(@RequestHeader String name){
