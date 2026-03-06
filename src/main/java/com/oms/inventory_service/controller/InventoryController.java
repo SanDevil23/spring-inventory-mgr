@@ -38,12 +38,11 @@ public class InventoryController {
     }
 
     public List<ProductDto> getProductsByCategory(@RequestHeader String category){
-        List<ProductDto> products = productService.getProductsByCategory(category);
-        return products;
+        return productService.getProductsByCategory(category);
     }
 
-    public void getProductsByName(@RequestHeader String name){
-        // to be defined
+    public List<ProductDto> getProductsByName(@RequestHeader String name){
+        return productService.getProductsByName(name);
     }
 
     public ResponseEntity<String> updateQty(@RequestHeader long id, @RequestHeader long qty){

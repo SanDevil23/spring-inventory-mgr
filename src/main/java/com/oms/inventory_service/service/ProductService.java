@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,10 +58,14 @@ public class ProductService implements IProductService{
         return productByCategory;
     }
 
-    // TODO: define logic for retrieving products by name
     @Override
     public List<ProductDto> getProductsByName(String name) {
-        return List.of();
+        List<Product> products = productRepository.findByName(name);
+        List<ProductDto> filteredList = new ArrayList<>();
+        for (Product prd : products){
+            filteredList.add(ProductDto.toDto(prd));
+        }
+        return  filteredList;
     }
 
     @Override
