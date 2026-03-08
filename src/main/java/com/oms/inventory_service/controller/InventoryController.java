@@ -3,6 +3,7 @@ package com.oms.inventory_service.controller;
 import com.oms.inventory_service.dto.ProductDto;
 import com.oms.inventory_service.models.Product;
 import com.oms.inventory_service.service.IProductService;
+import com.oms.inventory_service.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,44 +28,47 @@ public class InventoryController {
     private final IProductService productService;
 
     @PostMapping("/add/{productId}")
-    public ResponseEntity<String> addProduct(@RequestBody ProductDto product){
+    public ResponseEntity<APIResponse> addProduct(@RequestBody ProductDto product){
         ProductDto newProduct = productService.add(product);
         if (newProduct==null){
-            return ResponseEntity.badRequest().body("Failed to add a new product");
+            return ResponseEntity.badRequest().body(APIResponse.error("Failed to add new product"));
         }
 
-        return ResponseEntity.ok().body("New Product added successfully");
+        return ResponseEntity.ok(APIResponse.success("New Product added successfully", product));
     }
 
     @GetMapping("/{productId}")
-    public ProductDto getProductById(@RequestHeader long productId){
-        return productService.getProductById(productId);
+    public ResponseEntity<APIResponse> getProductById(@RequestHeader long productId){
+        ProductDto product = productService.getProductById(productId);
+        return ResponseEntity.ok(APIResponse.success(HttpStatus.FOUND.toString(), product));
     }
 
     @GetMapping("/{category}")
-    public List<ProductDto> getProductsByCategory(@RequestHeader String category){
-        return productService.getProductsByCategory(category);
+    public ResponseEntity<APIResponse> getProductsByCategory(@RequestHeader String category){
+        List<ProductDto> productsByCategory = productService.getProductsByCategory(category);
+        return ResponseEntity.ok(APIResponse.success(HttpStatus.OK.toString(),productsByCategory));
     }
 
     @GetMapping("/{name}")
-    public List<ProductDto> getProductsByName(@RequestHeader String name){
-        return productService.getProductsByName(name);
+    public ResponseEntity<APIResponse> getProductsByName(@RequestHeader String name){
+        List<ProductDto> productsByName = productService.getProductsByName(name);
+        return ResponseEntity.ok(APIResponse.success(HttpStatus.OK.toString(), productsByName));
     }
 
     @PatchMapping("/{id}/update/{qty}")
-    public ResponseEntity<String> updateQty(@RequestHeader long id, @RequestHeader long qty){
+    public ResponseEntity<APIResponse> updateQty(@RequestHeader long id, @RequestHeader long qty){
         HttpStatus status = productService.updateQuantity(id, qty);
         if (status == HttpStatus.INTERNAL_SERVER_ERROR)
-            return ResponseEntity.internalServerError().body("Failed to update quantity");
+            return ResponseEntity.internalServerError().body(APIResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.toString()));
 
-        return ResponseEntity.ok().body("Product Quantity Updated Successfully");
+        return ResponseEntity.ok(APIResponse.success("Product Updated Successfully", null));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@RequestHeader long id){
+    public ResponseEntity<APIResponse> delete(@RequestHeader long id){
         ProductDto deletedProduct = productService.delete(id);
         System.out.println(deletedProduct);     // to be logged to the client end
-        return ResponseEntity.ok("Product deleted from the inventory");
+        return ResponseEntity.ok(APIResponse.success(HttpStatus.OK.toString(), deletedProduct));
     }
 
 }
