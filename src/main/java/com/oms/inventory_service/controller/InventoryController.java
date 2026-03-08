@@ -6,13 +6,15 @@ import com.oms.inventory_service.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")       // CORS resolution **not recommended for production
+@Validated
 @RequiredArgsConstructor
+@RequestMapping("${api.prefix}/inventory")
 @RestController
 public class InventoryController {
 
@@ -24,6 +26,7 @@ public class InventoryController {
 
     private final IProductService productService;
 
+    @PostMapping("/add/{productId}")
     public ResponseEntity<String> addProduct(@RequestBody ProductDto product){
         ProductDto newProduct = productService.add(product);
         if (newProduct==null){
@@ -33,18 +36,22 @@ public class InventoryController {
         return ResponseEntity.ok().body("New Product added successfully");
     }
 
+    @GetMapping("/{productId}")
     public ProductDto getProductById(@RequestHeader long productId){
         return productService.getProductById(productId);
     }
 
+    @GetMapping("/{category}")
     public List<ProductDto> getProductsByCategory(@RequestHeader String category){
         return productService.getProductsByCategory(category);
     }
 
+    @GetMapping("/{name}")
     public List<ProductDto> getProductsByName(@RequestHeader String name){
         return productService.getProductsByName(name);
     }
 
+    @PatchMapping("/{id}/update/{qty}")
     public ResponseEntity<String> updateQty(@RequestHeader long id, @RequestHeader long qty){
         HttpStatus status = productService.updateQuantity(id, qty);
         if (status == HttpStatus.INTERNAL_SERVER_ERROR)
@@ -53,6 +60,7 @@ public class InventoryController {
         return ResponseEntity.ok().body("Product Quantity Updated Successfully");
     }
 
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@RequestHeader long id){
         ProductDto deletedProduct = productService.delete(id);
         System.out.println(deletedProduct);     // to be logged to the client end
