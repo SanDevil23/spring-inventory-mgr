@@ -2,3 +2,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka:8761/eureka/   # 👈 hostname matches docker-compose service name
+
+api:
+  prefix: /oms/v1

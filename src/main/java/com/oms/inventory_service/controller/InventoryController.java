@@ -19,12 +19,6 @@ import java.util.List;
 @RestController
 public class InventoryController {
 
-    // TODO: getProductById
-    // TODO: getProductByCategory
-    // TODO: getProductByName
-    // TODO: UpdateQuantity
-    // TODO: deleteProduct
-
     private final IProductService productService;
 
     @PostMapping("/add/{productId}")
