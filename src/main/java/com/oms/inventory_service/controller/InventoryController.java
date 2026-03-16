@@ -25,44 +25,44 @@ public class InventoryController {
     public ResponseEntity<APIResponse> addProduct(@RequestBody ProductDto product){
         ProductDto newProduct = productService.add(product);
         if (newProduct==null){
-            return ResponseEntity.badRequest().body(APIResponse.error("Failed to add new product"));
+            return ResponseEntity.badRequest().body(APIResponse.error("Failed to add new product", HttpStatus.BAD_REQUEST));
         }
 
-        return ResponseEntity.ok(APIResponse.success("New Product added successfully", product));
+        return ResponseEntity.ok(APIResponse.success("New Product added successfully", product, HttpStatus.CREATED));
     }
 
     @GetMapping("/{productId}")
     public ResponseEntity<APIResponse> getProductById(@RequestHeader long productId){
         ProductDto product = productService.getProductById(productId);
-        return ResponseEntity.ok(APIResponse.success(HttpStatus.FOUND.toString(), product));
+        return ResponseEntity.ok(APIResponse.success("Product retrieved successfully.", product, HttpStatus.FOUND));
     }
 
     @GetMapping("/{category}")
     public ResponseEntity<APIResponse> getProductsByCategory(@RequestHeader String category){
         List<ProductDto> productsByCategory = productService.getProductsByCategory(category);
-        return ResponseEntity.ok(APIResponse.success(HttpStatus.OK.toString(),productsByCategory));
+        return ResponseEntity.ok(APIResponse.success("Products for the selected category retrieved successfully.",productsByCategory, HttpStatus.OK));
     }
 
     @GetMapping("/{name}")
     public ResponseEntity<APIResponse> getProductsByName(@RequestHeader String name){
         List<ProductDto> productsByName = productService.getProductsByName(name);
-        return ResponseEntity.ok(APIResponse.success(HttpStatus.OK.toString(), productsByName));
+        return ResponseEntity.ok(APIResponse.success("Products retrieved successfully.", productsByName, HttpStatus.OK));
     }
 
     @PatchMapping("/{id}/update/{qty}")
     public ResponseEntity<APIResponse> updateQty(@RequestHeader long id, @RequestHeader long qty){
         HttpStatus status = productService.updateQuantity(id, qty);
         if (status == HttpStatus.INTERNAL_SERVER_ERROR)
-            return ResponseEntity.internalServerError().body(APIResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.toString()));
+            return ResponseEntity.internalServerError().body(APIResponse.error("Attempt to update the product failed", HttpStatus.INTERNAL_SERVER_ERROR));
 
-        return ResponseEntity.ok(APIResponse.success("Product Updated Successfully", null));
+        return ResponseEntity.ok(APIResponse.success("Product Updated Successfully", null, HttpStatus.OK));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<APIResponse> delete(@RequestHeader long id){
         ProductDto deletedProduct = productService.delete(id);
         System.out.println(deletedProduct);     // to be logged to the client end
-        return ResponseEntity.ok(APIResponse.success(HttpStatus.OK.toString(), deletedProduct));
+        return ResponseEntity.ok(APIResponse.success("Product Deleted Permanently", deletedProduct, HttpStatus.OK));
     }
 
 }
