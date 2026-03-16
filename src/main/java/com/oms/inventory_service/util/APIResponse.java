@@ -3,19 +3,18 @@ package com.oms.inventory_service.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class APIResponse {
 
     private String message;
     private HttpStatus httpStatus;
     private Object data;
-
-    private APIResponse() {
-    }
 
     public static APIResponse success(String message, Object data, HttpStatus status) {
         return new APIResponse()
