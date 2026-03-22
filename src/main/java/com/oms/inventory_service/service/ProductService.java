@@ -69,18 +69,12 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public HttpStatus updateQuantity(long productId, long reducedQty) {
+    public boolean updateQuantity(long productId, long reducedQty) {
         Product productToUpdate = productRepository.getReferenceById(productId);
         long currQty = productToUpdate.getQuantity();
         productToUpdate.setQuantity(currQty - reducedQty);
 
-        // verification mech
-        if (productRepository.getReferenceById(productId).getQuantity() == currQty - reducedQty) {
-            // TODO: need to log quantity not updated
-            return HttpStatus.INTERNAL_SERVER_ERROR ;
-        }
-
-        return HttpStatus.OK;
+        return productRepository.getReferenceById(productId).getQuantity() != currQty - reducedQty;
     }
 
     @Override

@@ -11,6 +11,6 @@ public interface IProductService {
     ProductDto getProductById(Long productId);
     List<ProductDto> getProductsByCategory(String category);
     List<ProductDto> getProductsByName(String name);
-    HttpStatus updateQuantity(long productId, long qty);
+    boolean updateQuantity(long productId, long qty);
     ProductDto delete(long productId);
 }
