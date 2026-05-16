@@ -51,8 +51,8 @@ public class InventoryController {
 
     @PatchMapping("/{id}/update/{qty}")
     public ResponseEntity<APIResponse> updateQty(@RequestHeader long id, @RequestHeader long qty){
-        HttpStatus status = productService.updateQuantity(id, qty);
-        if (status == HttpStatus.INTERNAL_SERVER_ERROR)
+        boolean isUpdated = productService.updateQuantity(id, qty);
+        if (!isUpdated)
             return ResponseEntity.internalServerError().body(APIResponse.error("Attempt to update the product failed", HttpStatus.INTERNAL_SERVER_ERROR));
 
         return ResponseEntity.ok(APIResponse.success("Product Updated Successfully", null, HttpStatus.OK));
