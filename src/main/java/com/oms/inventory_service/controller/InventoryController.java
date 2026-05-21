@@ -15,13 +15,13 @@ import java.util.List;
 @CrossOrigin("*")       // CORS resolution **not recommended for production
 @Validated
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/inventory")
+@RequestMapping("${api.prefix}/inventory/product")
 @RestController
 public class InventoryController {
 
     private final IProductService productService;
 
-    @PostMapping("/add/{productId}")
+    @PostMapping("/add")
     public ResponseEntity<APIResponse> addProduct(@RequestBody ProductDto product){
         ProductDto newProduct = productService.add(product);
         if (newProduct==null){
