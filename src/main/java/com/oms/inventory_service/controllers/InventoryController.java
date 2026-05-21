@@ -1,7 +1,6 @@
-package com.oms.inventory_service.controller;
+package com.oms.inventory_service.controllers;
 
 import com.oms.inventory_service.dto.ProductDto;
-import com.oms.inventory_service.models.Product;
 import com.oms.inventory_service.service.IProductService;
 import com.oms.inventory_service.util.APIResponse;
 import lombok.RequiredArgsConstructor;
