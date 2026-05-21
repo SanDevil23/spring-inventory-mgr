@@ -12,8 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDto {
-    private Long productId;
-
     @Nonnull
     private String brandName;
 
@@ -29,12 +27,11 @@ public class ProductDto {
     public static ProductDto toDto(Product product){
 
         return new ProductDto(
-                product.getProductId(),
+                product.getBrandName(),
                 product.getProductName(),
-                product.getBrandName(),
-                product.getBrandName(),
-                product.getCategory(),
-                product.getCostPrice()
+                product.getDescription(),
+                product.getCostPrice(),
+                product.getCategory()
         );
     }
 }
