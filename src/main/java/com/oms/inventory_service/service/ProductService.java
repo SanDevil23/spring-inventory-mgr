@@ -26,6 +26,7 @@ public class ProductService implements IProductService{
         Product newProduct = Product.builder()
                 .productName(product.getProductName())
                 .brandName(product.getBrandName())
+                .category(product.getCategory())
                 .description(product.getDescription())
                 .costPrice(product.getCostPrice())
                 .createdAt(LocalDateTime.now())
