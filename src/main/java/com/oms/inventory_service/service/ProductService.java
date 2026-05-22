@@ -22,13 +22,8 @@ public class ProductService implements IProductService{
 
     @Override
     public ProductDto add(ProductDto product) {
-        // check if the product already exists
-        if (productRepository.existsById(product.getProductId()))
-            return null;
-
         // creating new Product if it does not exist
         Product newProduct = Product.builder()
-                .productId(product.getProductId())
                 .productName(product.getProductName())
                 .brandName(product.getBrandName())
                 .description(product.getDescription())
