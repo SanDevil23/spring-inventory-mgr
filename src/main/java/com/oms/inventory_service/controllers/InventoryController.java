@@ -1,6 +1,7 @@
 package com.oms.inventory_service.controllers;
 
 import com.oms.inventory_service.dto.ProductDto;
+import com.oms.inventory_service.models.Product;
 import com.oms.inventory_service.service.IProductService;
 import com.oms.inventory_service.util.APIResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,11 @@ public class InventoryController {
 
     @PostMapping("/add")
     public ResponseEntity<APIResponse> addProduct(@RequestBody ProductDto product){
-        ProductDto newProduct = productService.add(product);
+        Product newProduct = productService.add(product);
         if (newProduct==null){
             return ResponseEntity.badRequest().body(APIResponse.error("Failed to add new product", HttpStatus.BAD_REQUEST));
         }
-
-        return ResponseEntity.ok(APIResponse.success("New Product added successfully", product, HttpStatus.CREATED));
+        return ResponseEntity.ok(APIResponse.success("New Product added successfully", newProduct, HttpStatus.CREATED));
     }
 
     @GetMapping("/{productId}")

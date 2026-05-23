@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 
 public interface IProductService {
-    ProductDto add(ProductDto product);
+    Product add(ProductDto product);
     ProductDto getProductById(Long productId);
     List<ProductDto> getProductsByCategory(String category);
     List<ProductDto> getProductsByName(String name);

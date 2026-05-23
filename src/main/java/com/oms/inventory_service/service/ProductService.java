@@ -21,7 +21,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public ProductDto add(ProductDto product) {
+    public Product add(ProductDto product) {
         // creating new Product if it does not exist
         Product newProduct = Product.builder()
                 .productName(product.getProductName())
@@ -33,8 +33,7 @@ public class ProductService implements IProductService{
                 .updatedAt(LocalDateTime.now())
                 .build();
 
-        Product createdProduct = productRepository.save(newProduct);
-        return ProductDto.toDto(createdProduct);
+        return productRepository.save(newProduct);
     }
 
     @Override
