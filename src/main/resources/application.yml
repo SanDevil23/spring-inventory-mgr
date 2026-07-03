@@ -18,7 +18,7 @@ spring:
   profiles:
     active: dev
   datasource:
-      url: jdbc:mysql://mysql:3306/ordersdb?createDatabaseIfNotExist=true
+      url: jdbc:mysql://mysql:3306/inventory_db?createDatabaseIfNotExist=true
       username: ${MYSQL_USER:root}
       password: ${MYSQL_PASSWORD:root}
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -47,7 +47,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://discovery-service:8761/eureka/   # 👈 hostname matches docker-compose service name
+      defaultZone: http://discovery-service:8761/eureka/   # hostname matches docker-compose service name
   instance:
     prefer-ip-address: true
 
